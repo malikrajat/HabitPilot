@@ -1,0 +1,33 @@
+{
+  "name": "habitpilot",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "packageManager": "pnpm@11.5.1",
+  "engines": {
+    "node": ">=22"
+  },
+  "scripts": {
+    "dev": "pnpm dev:desktop",
+    "dev:desktop": "pnpm --filter @habitpilot/desktop dev",
+    "dev:web": "pnpm --filter @habitpilot/web dev",
+    "dev:gateway": "pnpm --filter @habitpilot/gateway dev",
+    "desktop:build": "pnpm --filter @habitpilot/desktop build",
+    "desktop:info": "pnpm --filter @habitpilot/desktop exec tauri info",
+    "build": "pnpm -r --filter @habitpilot/consent-core --filter @habitpilot/health-analytics build && pnpm --filter @habitpilot/web build && pnpm --filter @habitpilot/gateway build",
+    "typecheck": "pnpm -r typecheck",
+    "test": "pnpm -r test",
+    "doctor": "node scripts/doctor.mjs",
+    "setup": "pnpm install && node scripts/doctor.mjs",
+    "icons": "node scripts/generate-icons.mjs",
+    "check:desktop": "cargo check --manifest-path apps/desktop/src-tauri/Cargo.toml",
+    "check:no-secrets": "pnpm --filter @habitpilot/web check:no-secrets",
+    "check:ai-paths": "node scripts/check-ai-paths.mjs",
+    "verify": "pnpm typecheck && pnpm test && pnpm build && pnpm check:no-secrets && pnpm check:ai-paths"
+  },
+  "devDependencies": {
+    "sharp": "^0.35.5",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}
